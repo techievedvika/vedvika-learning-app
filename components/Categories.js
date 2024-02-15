@@ -1,5 +1,5 @@
 import React,{useRef,useState,useEffect} from 'react'
-import { Text, View,StyleSheet,TouchableOpacity, ImageBackground,useWindowDimensions,Image } from 'react-native'
+import { Text, View,StyleSheet,TouchableOpacity, ImageBackground,useWindowDimensions,Image, Pressable } from 'react-native'
 import Animated, {
     useSharedValue,
     useAnimatedScrollHandler,
@@ -47,6 +47,16 @@ const Categories = ({data,autoPlay,pagination}) => {
   
   return (
     <View className="flex-1">
+    {/* <Pressable
+          onPress={()=>router.back()}
+          className="flex-row justify-start items-start z-20"
+        >
+          <Image
+            source={require('../assets/bg1.png')}
+            alt="back button"
+            style={{height:80,width:80}}
+          />
+    </Pressable> */}
     <Animated.ScrollView
       ref={scrollViewRef}
       onScroll={onScroll}
@@ -64,6 +74,7 @@ const Categories = ({data,autoPlay,pagination}) => {
       bounces={false}
       showsHorizontalScrollIndicator={false}
     >
+       
       {newData.map((item, index) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const style = useAnimatedStyle(() => {

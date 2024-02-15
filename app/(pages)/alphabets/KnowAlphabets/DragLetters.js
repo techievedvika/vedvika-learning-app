@@ -4,12 +4,7 @@ import Draggable from '../../../../components/alphabets/Draggable';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
 const DragLetters = () => {
-    useEffect(() => {
-        ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-        return () => {
-          ScreenOrientation.unlockAsync();
-        };
-      }, []);
+    
   return (
     <ScrollView>
         <View style={styles.mainContainer}>
@@ -45,7 +40,7 @@ const styles = StyleSheet.create({
     },  
     dropZone: {
       height: 200,
-      backgroundColor: "#00334d"
+      backgroundColor: "#green"
     },
     text: {
       marginTop: 25,

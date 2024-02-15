@@ -1,41 +1,34 @@
 
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import * as React from "react";
-import { Image, Pressable, Text, View } from "react-native";
+import { Image, Pressable, StatusBar, Text, View } from "react-native";
 
 const index = () => {
- 
+  const router = useRouter();
   // audioPlay screen open
   const [audioPlay, setAudioPlay] = React.useState(false);
   // voiceRecord screen open
   const [voiceRecording, setVoiceRecording] = React.useState(false);
 
-  // audioPlay screen open toggle
-  const audioPlayToggleSwitch = () => {
-    setAudioPlay((previousState) => !previousState);
-  };
-
-  // voiceRecord screen open toggle
-  const voiceRecordingToggleSwitch = () => {
-    setVoiceRecording((previousState) => !previousState);
-  };
+  
 
   return (
     <>
+      <StatusBar hidden={true} />
       <View className=" bg-cyan-100 h-full w-full absolute">
         {audioPlay || voiceRecording ? (
           ""
         ) : (
           <View className="my-5 ml-10 flex-row z-10">
             <Pressable
-              onPress={() => navigation.goBack()}
+              onPress={() => router.back()}
               className="flex-row justify-start items-start z-20"
             >
-              {/* <Image
+              <Image
                 source={require("../../../../assets/bg1.png")}
                 alt="back button"
                 className="h-12 w-12"
-              /> */}
+              />
             </Pressable>
             <View className="flex-row justify-center items-center w-full absolute ">
               <Text className="text-5xl text-black">Phonics</Text>

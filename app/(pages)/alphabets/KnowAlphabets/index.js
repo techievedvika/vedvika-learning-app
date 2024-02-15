@@ -1,17 +1,22 @@
 import { View, Text, Image, Pressable, ScrollView } from "react-native";
-import React from "react";
-import { Link } from "expo-router";
-
+import React, { useEffect } from "react";
+import { Link, useRouter } from "expo-router";
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 
 const index = () => {
   // navigation route
+  const router = useRouter();
+  useEffect(() => {
+    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+    
+  }, []);
 
   return (
     <View className="flex-1 bg-cyan-100">
       <View className="my-5 ml-10 flex-row z-10">
         <Pressable
-          
+          onPress={()=>router.back()}
           className="flex-row justify-start items-start z-20"
         >
           <Image

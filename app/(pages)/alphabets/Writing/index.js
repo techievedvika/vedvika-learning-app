@@ -163,7 +163,6 @@ const index =()=> {
             <Image source={backbt} alt="back button" style={{ height: 30, width: 30 }} />
           </Pressable>
         </View>
-
         <View style={{ flex: 1 }}>
           <ScrollView
             horizontal
@@ -172,7 +171,16 @@ const index =()=> {
           >
             {data?.map((item, index) => (
               <View style={{ justifyContent: "center", alignItems: "center", marginHorizontal: 2 }} key={index}>
-                <Link asChild href='/alphabets/Writing/write'>
+                <Link
+                   asChild
+                  //  href='/alphabets/Writing/DrawLines'
+                    href={{
+                      pathname:'/alphabets/Writing/Letter',
+                      params:{
+                          letter: item?.title, 
+                      }
+                    }}
+                >
                   <TouchableOpacity>
                     <Image source={item?.image} style={{ height: 150, width: 200, borderRadius: 8 }} />
                   </TouchableOpacity>

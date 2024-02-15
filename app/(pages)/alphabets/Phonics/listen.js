@@ -16,8 +16,10 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { PhonicImage } from "../../../../constants/data";
 import { Audio } from "expo-av";
+import { useRouter } from "expo-router";
 
 const listen = () => {
+  const router = useRouter();
   // screen size
   const { width, height } = useWindowDimensions();
   // navigation route
@@ -179,7 +181,7 @@ const listen = () => {
 
         <View className="my-5 ml-10 relative flex-row">
           <Pressable
-            onPress={() => navigation.goBack()}
+            onPress={() => router.back()}
             className="flex-row justify-start items-start"
           >
             <Image

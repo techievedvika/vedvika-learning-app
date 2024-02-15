@@ -8,34 +8,44 @@ import {
     Dimensions,
   } from "react-native";
   import React, { useEffect, useState } from "react";
-  import DragAndDrop from "volkeno-react-native-drag-drop";
+  import { Sounds } from "../../../../constants/data";
+  import { Audio } from "expo-av";
+import { useRouter } from "expo-router";
 
   const IdentifyAlphabetsOrder = () => {
-  
+
+    const router = useRouter();
     const windowWidth = Dimensions.get("window").width;
     const windowHeight = Dimensions.get("window").height;
     
     const[orderedLetters,setOrderedLetters]=useState([]);
     const [items, setItems] = useState([]);
-    const[letterImg,setLetterImg]=useState([
-      {
-        img:require("../../../../assets/trainsecond.png")
-      },
-      {
-        img:require("../../../../assets/trainsecond.png")
-      },
-      {
-        img:require("../../../../assets/trainsecond.png")
-      },
-      {
-        img:require("../../../../assets/trainsecond.png")
-      },
-      {
-        img:require("../../../../assets/trainsecond.png")
-      },
-    ]);
+    const[reset,setReset]=useState(false);
+    const[letterImg,setLetterImg]=useState([]);
     const [draggedLetters, setDraggedLetters] = useState([]);
     const[currentInd,setCurrentInd]=useState(0);
+    const letterArr = [
+      {
+        img:require("../../../../assets/trainsecond.png"),
+        letter:''
+      },
+      {
+        img:require("../../../../assets/trainsecond.png"),
+        letter:''
+      },
+      {
+        img:require("../../../../assets/trainsecond.png"),
+        letter:''
+      },
+      {
+        img:require("../../../../assets/trainsecond.png"),
+        letter:''
+      },
+      {
+        img:require("../../../../assets/trainsecond.png"),
+        letter:''
+      },
+    ];
     const makeLettersArray = ()=>{
       let arr = [];
       for(let i=1;i<=26;i++){
@@ -47,13 +57,28 @@ import {
       }
       return arr;
     }
-    
-    
-
-
+    const playSuccess = async()=> {
+      try{
+        const { sound } = await Audio.Sound.createAsync(Sounds.success);
+        await sound.playAsync();
+      }catch(err){
+        console.log('err playing success',err);
+      }  
+    }
+    const playError = async()=>{
+      try{
+        const { sound } = await Audio.Sound.createAsync(Sounds.error);
+        await sound.playAsync();
+      }catch(err){
+        console.log('err playing error',err);
+      }
+    }
+   
+  
     const handleLetterPress = (letter, ind) => {
+      //console.log(currentInd);
       let boxes = [...letterImg];
-      if(letter===orderedLetters[currentInd].text){
+      if(currentInd<5 && letter===orderedLetters[currentInd].text){
         if(!draggedLetters.includes(letter)){
           let emptyInd = boxes.findIndex((box) => !box.letter);
           if(emptyInd!==-1){
@@ -61,10 +86,12 @@ import {
             setLetterImg(boxes);
             setDraggedLetters([...draggedLetters,letter]);
             setCurrentInd(currentInd + 1);
+            playSuccess();
           }
         }
       }else{
-        console.log('Wrong Order')
+        console.log('Wrong Order');
+        playError();
       }
     };
 
@@ -88,8 +115,11 @@ import {
       let sortedArr = sortLetters(arr);
       //console.log(sortedArr);
       setOrderedLetters(sortedArr);
-    },[]);
-    //console.log(items);
+      setLetterImg(letterArr);
+      setCurrentInd(0);
+      setDraggedLetters([]);
+    },[reset]);
+    
     return (
       <View
         className="bg-yellow-200 items-center"
@@ -105,7 +135,7 @@ import {
           className="mt-5 ml-10 flex-row z-10 justify-between"
         >
           <Pressable
-           
+              onPress={()=>router.back()}
             className="flex-row justify-start items-start z-20"
           >
             <Image
@@ -135,15 +165,27 @@ import {
         
           
           <View className="bg-yellow-200 sm:mt-5  sm:-ml-5 md:-ml-12 -ml-12 mt-8 ">
+            { currentInd > 4 && (letterImg[4].letter) && (
+                  <View className='flex-1  flex-row justify-center shadow-2xl'>
+                    <Pressable
+                      onPress={()=>setReset(!reset)}
+                    >
+                      <Image 
+                        style={{width:80,height:80}}
+                        source={require('../../../../assets/img/refresh-01.png')}
+                      />
+                    </Pressable>
+                  </View>
+                  )}
             <View className='flex bottom-10 ms-10 flex-row items-center justify-center'>
          
-                {items.map((item,ind)=>(
-                    <View>
+                { currentInd<5 && items.map((item,ind)=>(
+                    <View key={ind}>
                       <View className="m-5 p-2 ">
                         <Pressable
                           onPress={() => handleLetterPress(item.text, ind)}
                         >
-                          <Text className="text-5xl">{item.text}</Text>
+                          <Text className="text-7xl font-extrabold  text-indigo-600">{item.text}</Text>
                         </Pressable>
                       </View>
                     </View>
@@ -151,10 +193,11 @@ import {
                   
                 ))}
             </View>
+                  
             <View className='flex bottom-10 ms-10 flex-row items-center justify-center'>
          
                 {letterImg.map((a,ind)=>(
-                    <View> 
+                    <View key={ind}> 
                         <View
                           className=" justify-center items-center"
                         >
@@ -163,7 +206,7 @@ import {
                             className="justify-center items-center flex-row w-[110px] h-[90px] md:w-[145px] md:h-[120px] "
                           >   
                             {a.letter && (
-                              <Text className="text-5xl">{a.letter}</Text>
+                              <Text className="text-5xl  text-violet-900 font-bold  rounded-full py-3 text-justify p-2">{a.letter}</Text>
                             ) }
                           </ImageBackground>
                         </View>

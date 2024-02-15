@@ -5,17 +5,18 @@ import {
     TouchableOpacity,
     Dimensions,
     Modal,
+    StatusBar
   } from "react-native";
   
   import React, { useState, useEffect, useRef } from "react";
-  import { StatusBar } from "expo-status-bar";
   import backbt from "../../../../assets/bg1.png";
   import * as Speech from "expo-speech";
   import Datas from "../../../../constants/data";
   import { SafeAreaView } from "react-native-safe-area-context";
+  import { useRouter } from "expo-router";
   
   const letters = () => {
-
+    const router = useRouter();
     const { width, height } = Dimensions.get("window");
     const [count, setCount] = useState(0);
     const [imgCount, setImgCount] = useState(0);
@@ -47,12 +48,13 @@ import {
     };
     return (
       <>
+        <StatusBar hidden={true}/>
         <View className="bg-white" style={{ width: width, height: height }}>
           <StatusBar hidden={true} />
           <View className="flex-row my-3 ">
             <View className="flex-1 justify-start">
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={()=>router.back()}
                 className="ml-16"
               >
                 <Image source={backbt} alt="back button" className="h-10 w-10" />

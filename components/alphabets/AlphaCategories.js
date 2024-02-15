@@ -20,7 +20,7 @@ import {
   } from "react-native-reanimated";
   import Pagination from "../Pagination";
   import backbt from "../../assets/backward-01.png";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 
   const AlphaCategories = ({ data, autoPlay, pagination }) => {
     const scrollViewRef = useAnimatedRef(null);
@@ -31,6 +31,7 @@ import { Link } from "expo-router";
       ...data,
       { key: "spacer-right" },
     ]);
+    const router = useRouter();
     const { width, height } = useWindowDimensions();
     const SIZE = width * 0.5;
     const SPACER = (width - SIZE) / 2;
@@ -60,9 +61,13 @@ import { Link } from "expo-router";
     return (
       <>
         <StatusBar hidden={true} />
-        <View className='flex-2 justify-center items-center' >
-            <View className="flex-row justify-start items-start">     
-                <Image source={backbt} alt="back" style={styles.button}  className="" />
+        <View className='flex-1 justify-center items-center' >
+            <View className="flex-row justify-start ps-16 items-start">     
+                <Pressable
+                onPress={()=>router.back()}
+                >
+                  <Image source={backbt} alt="back" style={{ height:60,width:60,marginStart:60,top:40}}  className="" />
+                </Pressable>
             </View>
             <View className="flex-1">
               <Animated.ScrollView

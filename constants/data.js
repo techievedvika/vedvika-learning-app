@@ -681,6 +681,7 @@ export const PhonicImage = {
       smallAlphabet: require("../assets/VedvikaTechnology/imageAlphabet/SmallLetter/a.png"),
       imageName: require("../assets/VedvikaTechnology/imagesPNG/apple.png"),
       title: "A",
+      small:'a',
       name: "Apple",
       images: [
         {
@@ -715,6 +716,7 @@ export const PhonicImage = {
       smallAlphabet: require("../assets/VedvikaTechnology/imageAlphabet/SmallLetter/b.png"),
       imageName: require("../assets/VedvikaTechnology/imagesPNG/ball.png"),
       title: "B",
+      small:'b',
       name: "ball",
       images: [
         {
@@ -749,6 +751,7 @@ export const PhonicImage = {
       smallAlphabet: require("../assets/VedvikaTechnology/imageAlphabet/SmallLetter/c.png"),
       imageName: require("../assets/VedvikaTechnology/imagesPNG/cat.png"),
       title: "C",
+      small:'c',
       name: "Cat",
       images: [
         {
@@ -783,6 +786,7 @@ export const PhonicImage = {
       smallAlphabet: require("../assets/VedvikaTechnology/imageAlphabet/SmallLetter/d.png"),
       imageName: require("../assets/VedvikaTechnology/imagesPNG/dog.png"),
       title: "D",
+      small:'d',
       name: "Dog",
       images: [
         {
@@ -826,7 +830,7 @@ export const PhonicImage = {
       smallAlphabet: require("../assets/VedvikaTechnology/imageAlphabet/SmallLetter/e.png"),
       imageName: require("../assets/VedvikaTechnology/imagesPNG/egg.png"),
       title: "E",
-      name: "Egg",
+      small:'e',
       images: [
         {
           img: require("../assets/VedvikaTechnology/imagesPNG/Ear.png"),
@@ -867,6 +871,7 @@ export const PhonicImage = {
       smallAlphabet: require("../assets/VedvikaTechnology/imageAlphabet/SmallLetter/f.png"),
       imageName: require("../assets/VedvikaTechnology/imagesPNG/fish.png"),
       title: "F",
+      small:'f',
       name: "Fish",
       images: [
         {
@@ -910,6 +915,7 @@ export const PhonicImage = {
       smallAlphabet: require("../assets/VedvikaTechnology/imageAlphabet/SmallLetter/g.png"),
       imageName: require("../assets/VedvikaTechnology/imagesPNG/grapes.png"),
       title: "G",
+      small:'g',
       name: "Grapes",
       images: [
         {
@@ -957,6 +963,7 @@ export const PhonicImage = {
       smallAlphabet: require("../assets/VedvikaTechnology/imageAlphabet/SmallLetter/h.png"),
       imageName: require("../assets/VedvikaTechnology/imagesPNG/hat.png"),
       title: "H",
+      small:'h',
       name: "Hat",
       images: [
         {
@@ -1000,6 +1007,7 @@ export const PhonicImage = {
       smallAlphabet: require("../assets/VedvikaTechnology/imageAlphabet/SmallLetter/i.png"),
       imageName: require("../assets/VedvikaTechnology/imagesPNG/iceCream.png"),
       title: "I",
+      small:'i',
       name: "ice-cream",
       images: [
         {
@@ -1030,6 +1038,7 @@ export const PhonicImage = {
       smallAlphabet: require("../assets/VedvikaTechnology/imageAlphabet/SmallLetter/j.png"),
       imageName: require("../assets/VedvikaTechnology/imagesPNG/jug.png"),
       title: "J",
+      small:'j',
       name: "Jug",
       images: [
         {
@@ -2688,4 +2697,8 @@ export const AlphaImages = {
       ]
     },
   ]
+}
+export const Sounds = {
+  error:require('../assets/audio/buzzer.mp3'),
+  success:require('../assets/audio/success.mp3')
 }

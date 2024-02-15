@@ -20,7 +20,11 @@ import {
   } from "react-native-responsive-dimensions";
   import * as Speech from "expo-speech";
   import Draggable from "react-native-draggable";
+import { useRouter } from "expo-router";
   const ColorLetters = () => {
+
+    const router = useRouter();
+
     const[letters,setLetters]=useState([]);
     const[items,setItems]=useState([]);
     const[box1Boundary,setBox1Boundary]=useState([]);
@@ -46,6 +50,7 @@ import {
         setLetters(arr);
         return arr;
     }
+    
     const selectItems = (array)=>{
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -56,16 +61,24 @@ import {
     } 
     const handleBox1Layout = (event) => {
       const { x, y, width, height } = event.nativeEvent.layout;
-      //console.log('Box 1 Layout: ',event.nativeEvent.layout);
+      const parentWidth = Dimensions.get('window').width; // Get the width of the parent container
+    
+      // Adjust boundaries based on flex direction (assuming row direction)
+      const minX = x; // Left edge of the box
+      const maxX = x + width; // Right edge of the box
+      const minY = y; // Top edge of the box
+      const maxY = y + height; // Bottom edge of the box
+    
       setBox1Boundary({
-        minX: x,
-        maxX: x + width,
-        minY: y,
-        maxY: y + height,
+        minX: minX,
+        maxX: maxX,
+        minY: minY,
+        maxY: maxY,
       });
     };
   
     const handleBox2Layout = (event) => {
+
       //console.log('Box 2 Layout: ',event.nativeEvent.layout);
       const { x, y, width, height } = event.nativeEvent.layout;
       //console.log("Box 2: ",x,y,width,height);
@@ -76,6 +89,15 @@ import {
         maxY: y + height,
       });
     };
+    // const handleBox1Layout = (event) => {
+    //   const { x, y } = event.nativeEvent.layout;
+    //   setBox1({ x, y });
+    // };
+    
+    // const handleBox2Layout = (event) => {
+    //   const { x, y } = event.nativeEvent.layout;
+    //   setBox2({ x, y });
+    // };
     const handleBox1Ref = (e)=>{
       e.target.measure(
         (x, y, width, height, pageX, pageY) => {
@@ -98,37 +120,32 @@ import {
         });
       }
     }
-      const handleDrop = (e,letter) => {
-        console.log('Box 1: ',box1);
-        console.log('Box 2: ',box2);
-        console.log('Event',e.nativeEvent);
-        // //console.log(letter);
-        // const dropX = e.nativeEvent.pageX - box1Boundary.minX;
-        // const dropY = e.nativeEvent.pageY - box1Boundary.minY;
-    
-       
-        //   // Check if the drop is inside Box 1
-        //   if (
-        //     dropX >= 0 &&
-        //     dropX <= styles.box1.width &&
-        //     dropY >= 0 &&
-        //     dropY <= styles.box1.height
-        //   ) {
-        //     console.log(`Dropped ${letter} into Box 1`);
-        //     // Perform actions for Box 1
-        //   } else if (
-        //     // Check if the drop is inside Box 2
-        //     dropX >= 0 &&
-        //     dropX <= styles.box2.width &&
-        //     dropY >= 0 &&
-        //     dropY <= styles.box2.height
-        //   ) {
-        //     console.log(`Dropped ${letter} into Box 2`);
-        //     // Perform actions for Box 2
-        //   } else {
-        //     console.log(`Dropped ${letter} outside of both boxes`);
-        //   }
-      };
+    const handleDrop = (e, letter) => {
+      const dropX = e.nativeEvent.pageX;
+      const dropY = e.nativeEvent.pageY;
+      console.log(e.nativeEvent);
+      console.log('Box 1 :', box1Boundary);
+      //console.log('Box 2 :', box2Boundary);
+      if (
+        dropX >= box1Boundary.minX &&
+        dropX <= box1Boundary.maxX &&
+        dropY >= box1Boundary.minY &&
+        dropY <= box1Boundary.maxY
+      ) {
+        console.log(`Dropped ${letter} into Box 1`);
+        // Perform actions for Box 1
+      } else if (
+        dropX >= box2Boundary.minX &&
+        dropX <= box2Boundary.maxX &&
+        dropY >= box2Boundary.minY &&
+        dropY <= box2Boundary.maxY
+      ) {
+        console.log(`Dropped ${letter} into Box 2`);
+        // Perform actions for Box 2
+      } else {
+        console.log(`Dropped ${letter} outside of both boxes`);
+      }
+    };
     useEffect(()=>{
         let arr = makeLettersArray();
         let selectedItems = selectItems(arr);
@@ -152,7 +169,7 @@ import {
                     flexDirection: "row",
                 }}
                 >
-                <Pressable >
+                <Pressable onPress={()=>router.back()}>
                     <Image
                     source={require("../../../../assets/bg1.png")}
                     alt="back button"
@@ -183,23 +200,22 @@ import {
 
                 <View style={styles.contentContainer}>
                   <View style={styles.boxesContainer}>
-                    <View ref={box1Ref}  style={styles.box1} onLayout={handleBox1Ref}>
+                    <View ref={box1Ref}  style={styles.box1} onLayout={handleBox1Layout}>
                       <Image style={styles.boxImg} source={require('../../../../assets/img/redSmall.png')}/>
                     </View>
-                    <View ref={box2Ref} style={styles.box2} onLayout={handleBox2Ref}>
+                    <View ref={box2Ref} style={styles.box2} onLayout={handleBox2Layout}>
                     <Image style={styles.boxImg} source={require('../../../../assets/img/blueCap.png')}/>
                     </View>
                   </View>
                   <View style={styles.textContainer}>
                     <View style={{flex:1,justifyContent:'center',backgroundColor:'green',paddingBottom:50,gap:105,flexDirection:'row',alignItems:'center'}}>
                         {items && items.map((a, ind) => (
-                          <View key={ind} >
+                          <View key={ind}  >
                             <Draggable
                                 style={styles.draggable}
                                 onDragRelease={(event) => handleDrop(event, a.letter)}
-                                zIndex={1}
-                                children
-                                
+                               
+                                children 
                               >
                                 <View style={styles.letterContainer}>
                                   <Text style={styles.letter}>{a.letter}</Text>
@@ -230,11 +246,11 @@ import {
         minHeight:150
     },
     boxesContainer:{
-      flexDirection:'row',
-      gap:35,
-      justifyContent:'space-between',
-      // backgroundColor:'pink',
-      padding:20
+      // flexDirection:'row',
+      // gap:35,
+      // justifyContent:'space-between',
+      // // backgroundColor:'pink',
+      // padding:20
     },
     box:{
       justifyContent:'center',
@@ -258,9 +274,8 @@ import {
       width:280
     },
     draggable:{
-      flex:1,
-      justifyContent:'center',
-     
+   
+    
     },
     letterContainer:{
         justifyContent:'center',

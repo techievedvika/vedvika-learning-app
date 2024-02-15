@@ -54,7 +54,7 @@ const Draggable = ({ onDrop, index }) => {
       gesture.moveY > dropZone1.top &&
       gesture.moveY < dropZone1.bottom &&
       gesture.moveX > dropZone1.left &&
-      gesture.moveX < dropZone1.right
+      gesture.moveX < dropZone1.right 
     ) || (
       gesture.moveY > dropZone2.top &&
       gesture.moveY < dropZone2.bottom &&
@@ -83,7 +83,7 @@ const CIRCLE_RADIUS = 30;
 
 const styles = StyleSheet.create({
   circle: {
-    backgroundColor: 'skyblue',
+    backgroundColor: 'blue',
     width: CIRCLE_RADIUS * 2,
     height: CIRCLE_RADIUS * 2,
     borderRadius: CIRCLE_RADIUS,
