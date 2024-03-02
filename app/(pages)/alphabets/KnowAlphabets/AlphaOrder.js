@@ -6,6 +6,7 @@ import {
     Text,
     View,
     Dimensions,
+    StatusBar,
   } from "react-native";
   import React, { useEffect, useState } from "react";
   import { Sounds } from "../../../../constants/data";
@@ -121,109 +122,112 @@ import { useRouter } from "expo-router";
     },[reset]);
     
     return (
-      <View
-        className="bg-yellow-200 items-center"
-        style={{
-          width: windowWidth,
-          height: windowHeight,
-          flex: 1,
-        }}
-      >
-        {/* header section */}
+      <>
+        <StatusBar hidden={true} />
         <View
-          style={{ width: windowWidth - 10 }}
-          className="mt-5 ml-10 flex-row z-10 justify-between"
+          className="bg-yellow-200 items-center"
+          style={{
+            width: windowWidth,
+            height: windowHeight,
+            flex: 1,
+          }}
         >
-          <Pressable
-              onPress={()=>router.back()}
-            className="flex-row justify-start items-start z-20"
+          {/* header section */}
+          <View
+            style={{ width: windowWidth - 10 }}
+            className="mt-5 ml-10 flex-row z-10 justify-between"
           >
-            <Image
-              source={require("../../../../assets/bg1.png")}
-              alt="back button"
-              className="h-12 w-12 overflow-visible"
-            />
-          </Pressable>
-          <View className="flex-row justify-center items-center w-full absolute ">
-            <Text className="text-4xl text-black font-extrabold underline">
-              Identify Alphabet Order
-            </Text>
+            <Pressable
+                onPress={()=>router.back()}
+              className="flex-row justify-start items-start z-20"
+            >
+              <Image
+                source={require("../../../../assets/bg1.png")}
+                alt="back button"
+                className="h-12 w-12 overflow-visible"
+              />
+            </Pressable>
+            <View className="flex-row justify-center items-center w-full absolute ">
+              <Text className="text-4xl text-black font-extrabold underline">
+                Identify Alphabet Order
+              </Text>
+            </View>
+            <Pressable className="items-end z-20 mr-10">
+              <Image
+                source={require("../../../../assets/soundon.png")}
+                alt="back button"
+                className="h-12 w-12 overflow-visible"
+              />
+            </Pressable>
           </View>
-          <Pressable className="items-end z-20 mr-10">
-            <Image
-              source={require("../../../../assets/soundon.png")}
-              alt="back button"
-              className="h-12 w-12 overflow-visible"
-            />
-          </Pressable>
-        </View>
-        {/* main content start */}
-        <View
-          style={{ height: windowHeight - 80, width: windowWidth - 10 }}
-          className="items-center justify-center flex-row"
-        >
-        
+          {/* main content start */}
+          <View
+            style={{ height: windowHeight - 80, width: windowWidth - 10 }}
+            className="items-center justify-center flex-row"
+          >
           
-          <View className="bg-yellow-200 sm:mt-5  sm:-ml-5 md:-ml-12 -ml-12 mt-8 ">
-            { currentInd > 4 && (letterImg[4].letter) && (
-                  <View className='flex-1  flex-row justify-center shadow-2xl'>
-                    <Pressable
-                      onPress={()=>setReset(!reset)}
-                    >
-                      <Image 
-                        style={{width:80,height:80}}
-                        source={require('../../../../assets/img/refresh-01.png')}
-                      />
-                    </Pressable>
-                  </View>
-                  )}
-            <View className='flex bottom-10 ms-10 flex-row items-center justify-center'>
-         
-                { currentInd<5 && items.map((item,ind)=>(
-                    <View key={ind}>
-                      <View className="m-5 p-2 ">
-                        <Pressable
-                          onPress={() => handleLetterPress(item.text, ind)}
-                        >
-                          <Text className="text-7xl font-extrabold  text-indigo-600">{item.text}</Text>
-                        </Pressable>
-                      </View>
+            
+            <View className="bg-yellow-200 sm:mt-5  sm:-ml-5 md:-ml-12 -ml-12 mt-8 ">
+              { currentInd > 4 && (letterImg[4].letter) && (
+                    <View className='flex-1  flex-row justify-center shadow-2xl'>
+                      <Pressable
+                        onPress={()=>setReset(!reset)}
+                      >
+                        <Image 
+                          style={{width:80,height:80}}
+                          source={require('../../../../assets/img/refresh-01.png')}
+                        />
+                      </Pressable>
                     </View>
-                      
-                  
-                ))}
-            </View>
-                  
-            <View className='flex bottom-10 ms-10 flex-row items-center justify-center'>
-         
-                {letterImg.map((a,ind)=>(
-                    <View key={ind}> 
-                        <View
-                          className=" justify-center items-center"
-                        >
-                          <ImageBackground
-                            source={a.img}
-                            className="justify-center items-center flex-row w-[110px] h-[90px] md:w-[145px] md:h-[120px] "
-                          >   
-                            {a.letter && (
-                              <Text className="text-5xl  text-violet-900 font-bold  rounded-full py-3 text-justify p-2">{a.letter}</Text>
-                            ) }
-                          </ImageBackground>
+              )}
+              <View className='flex bottom-10 ms-10 flex-row items-center justify-center'>
+          
+                  { currentInd<5 && items.map((item,ind)=>(
+                      <View key={ind}>
+                        <View className="m-5 p-2 ">
+                          <Pressable
+                            onPress={() => handleLetterPress(item.text, ind)}
+                          >
+                            <Text className="text-7xl font-extrabold  text-indigo-600">{item.text}</Text>
+                          </Pressable>
                         </View>
-                    </View>
-                      
-                  
-                ))}
+                      </View>
+                        
+                    
+                  ))}
+              </View>
+                    
+              <View className='flex bottom-10 ms-10 flex-row items-center justify-center'>
+          
+                  {letterImg.map((a,ind)=>(
+                      <View key={ind}> 
+                          <View
+                            className=" justify-center items-center"
+                          >
+                            <ImageBackground
+                              source={a.img}
+                              className="justify-center items-center flex-row w-[110px] h-[90px] md:w-[145px] md:h-[120px] "
+                            >   
+                              {a.letter && (
+                                <Text className="text-5xl  text-violet-900 font-bold  rounded-full py-3 text-justify p-2">{a.letter}</Text>
+                              ) }
+                            </ImageBackground>
+                          </View>
+                      </View>
+                        
+                    
+                  ))}
+              </View>
+              {/* <View className='flex bottom-10 ms-10 flex-row items-center justify-center'>
+                
+              </View> */}
             </View>
-            {/* <View className='flex bottom-10 ms-10 flex-row items-center justify-center'>
-              
-            </View> */}
           </View>
+          
+    
+          {/* main content end */}
         </View>
-        
-  
-        {/* main content end */}
-      </View>
+      </>
     );
   };
   

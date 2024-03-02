@@ -33,6 +33,7 @@ import { useRouter } from "expo-router";
     const box2Ref=useRef(null);
     const[box1,setBox1]=useState([]);
     const[box2,setBox2]=useState([]);
+    
     const makeLettersArray = ()=>{
         let arr = [];
         for(let i=1;i<=26;i++){
@@ -214,7 +215,6 @@ import { useRouter } from "expo-router";
                             <Draggable
                                 style={styles.draggable}
                                 onDragRelease={(event) => handleDrop(event, a.letter)}
-                               
                                 children 
                               >
                                 <View style={styles.letterContainer}>
@@ -246,11 +246,11 @@ import { useRouter } from "expo-router";
         minHeight:150
     },
     boxesContainer:{
-      // flexDirection:'row',
-      // gap:35,
-      // justifyContent:'space-between',
-      // // backgroundColor:'pink',
-      // padding:20
+      flexDirection:'row',
+      gap:35,
+      justifyContent:'space-between',
+      // backgroundColor:'pink',
+      padding:20
     },
     box:{
       justifyContent:'center',

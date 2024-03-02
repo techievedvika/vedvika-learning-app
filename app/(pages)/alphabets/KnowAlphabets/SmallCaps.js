@@ -10,7 +10,8 @@ import { useRouter } from 'expo-router';
     // screen height and width
     const windowWidth = Dimensions.get("window").width;
     const windowHeight = Dimensions.get("window").height;
-
+    
+    const[reset,setReset]=useState(false);
     const[letters,setLetters]=useState([]);
     const makeLettersArray = ()=>{
       let arr = [];
@@ -46,7 +47,7 @@ import { useRouter } from 'expo-router';
       console.error('PhonicImage is not an array.');
     }
     
-  },[]);
+  },[reset]);
   //console.log(PhonicImage);
     return (
       <>
@@ -64,19 +65,22 @@ import { useRouter } from 'expo-router';
               {/* header section */}
               <View
                 style={{ width: windowWidth - 10 }}
-                className="mt-5 me-10 flex-row z-10 justify-between"
+                className="mt-5 me-10 ms-10 flex-row  pb-6"
               >
                 <Pressable
                   onPress={()=>router.back()}
-                  className="flex-row justify-start items-start z-20"
+                  className="flex-row justify-start px-10  items-start z-20"
                 >
                   <Image
                     source={require("../../../../assets/bg1.png")}
                     alt="back button"
-                    className="h-12 w-12 overflow-visible"
+                    className="h-12 w-12 overflow-visible ms-10"
                   />
                 </Pressable>
-                
+                <View style={{textAlign:'center'}}>
+
+                  <Text className='text-3xl font-bold'>Match capital and small alphabets</Text>
+                </View>
                 {/* <Pressable className="items-end z-20 me-10">
                   <Image
                     source={require("../../../../assets/soundon.png")}
@@ -94,6 +98,7 @@ import { useRouter } from 'expo-router';
             >
                   <MatchLetters
                     pairs={letters}
+                    reset = {()=>setReset(!reset)}
                   />
                 </View>
               {/* main content end */}

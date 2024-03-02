@@ -6,31 +6,39 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
+  StatusBar,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { PhonicImage } from "../../../../constants/data"
 // import LayoutPhonicsRecord from "./LayoutPhonicsRecord";
 import AudioRecoder from "./VoiceRecording";
+import { useRouter } from "expo-router";
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 const RecordingLevelLayout = () => {
-  // console.log(routerChange);
-  // navigation route
-  //const navigation = useNavigation();
-
-  // voiceRecord screen open
+  
   const [voiceRecording, setVoiceRecording] = React.useState(false);
   const [imgSend, setImgSend] = React.useState(false);
   const [imgName, setImgName] = React.useState(false);
-
+  
+  const router = useRouter();
   // voiceRecord screen open toggle
   const voiceRecordingToggleSwitch = (img, name) => {
     setImgSend(img);
     setImgName(name);
     setVoiceRecording((previousState) => !previousState);
   };
+  useEffect(() => {
+    async function lockScreenOrientation() {
+      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+    }
+    lockScreenOrientation();
+   
+  }, []);
 
   return (
     <>
+      <StatusBar hidden={true}/>
       {voiceRecording ? (
         <AudioRecoder
           img={imgSend}
@@ -41,7 +49,7 @@ const RecordingLevelLayout = () => {
         <View className="w-full h-full">
           <View className="mt-5 ml-10 relative flex-row z-10 drop-shadow-2xl items-center">
             <Pressable
-              
+              onPress={()=>router.back()}
               className="flex-row justify-start items-start z-20"
             >
               <Image

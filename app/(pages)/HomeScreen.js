@@ -22,12 +22,13 @@ const HomeScreen = () => {
       route: "/numbers",
     },
   ];
-  // useEffect(() => {
-  //   ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-  //   return () => {
-  //     ScreenOrientation.unlockAsync();
-  //   };
-  // }, []);
+  useEffect(() => {
+    async function lockScreenOrientation() {
+      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+    }
+    lockScreenOrientation();
+    
+  }, []);
   return (
     <>
        <StatusBar hidden={true} />

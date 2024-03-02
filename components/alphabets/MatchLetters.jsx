@@ -6,19 +6,17 @@ import { Caterpillar } from '../../constants/data';
 import { Sounds } from '../../constants/data';
 import { Audio } from "expo-av";
 
-const MatchLetters = ({pairs}) => {
+const MatchLetters = ({pairs,reset}) => {
     //console.log(pairs);
-    const [matchedPairs, setMatchedPairs] = useState([]);
-    const [selectedPair, setSelectedPair] = useState([]);
+    
     const[caps,setCaps]=useState([]);
     const[small,setSmall]=useState([]);
     const [letters,setLetters] = useState([]);
     const[currentInd,setCurrentInd]=useState(0);
     const[containers,setContainers]=useState([]);
-    const handleDragStart = (pair) => {
-      setSelectedPair(pair);
-    };
-    const handleLetters = (array) => {
+    //const[reset,setReset]=useState(false);
+    
+    const handleLetters = (array,reset) => {
         let capLetters = array.map((a)=>a.cap);
         setCaps(capLetters);
         for (let i = array.length - 1; i > 0; i--) {
@@ -57,6 +55,7 @@ const MatchLetters = ({pairs}) => {
         }
       }
       const handleCap = (letter)=>{
+          //console.log('Index: ',currentInd);
           console.log('Cap',letter);
           let boxes = [...containers];
           //console.log(boxes);
@@ -75,23 +74,28 @@ const MatchLetters = ({pairs}) => {
                   if(findLetter.cap===letter){
                     boxes[emptyInd].cap=letter;
                     playSuccess();
+                    setCurrentInd(currentInd + 1);
                   }else{
                     console.log('Wrong capital Letter');
                     playError();
                   }
                 }
               }else{
-                
+                if(currentInd===0){
+
+                  setCurrentInd(currentInd + 1);
+                }
                 boxes[emptyInd].cap=letter;
                 playSuccess();
               }
               setContainers(boxes);
-              setCurrentInd(currentInd + 1);
+              
               
             }
           }
       }
       const handleSmall = (letter)=>{
+        //console.log('Index: ',currentInd);
         console.log('small',letter);
         let boxes = [...containers];
           let findInd = boxes.findIndex((a)=>a.small===letter);
@@ -109,6 +113,7 @@ const MatchLetters = ({pairs}) => {
                   if(findLetter.small===letter){
                     boxes[emptyInd].small=letter;
                     playSuccess();
+                    setCurrentInd(currentInd + 1);
                   }else{
                     console.log('Wrong small Letter');
                     playError()
@@ -118,9 +123,13 @@ const MatchLetters = ({pairs}) => {
                 
                 boxes[emptyInd].small=letter;
                 playSuccess();
+                if(currentInd===0){
+
+                  setCurrentInd(currentInd + 1);
+                }
               }
               setContainers(boxes);
-              setCurrentInd(currentInd + 1);
+              
               
             }
           }
@@ -130,36 +139,46 @@ const MatchLetters = ({pairs}) => {
         setData();
         setLetters(pairs);
         handleLetters(pairs);
-     
+        setCurrentInd(0);
     }, [ pairs]);
     //console.log(small);
     //console.log(selectedPair);
+    console.log(currentInd);
     return (
         <View  style={styles.container}>
        
         {/* Capital Letters */}
-        <View style={[styles.containerBox,{left:30,zIndex:1,top:20}]}>
+       {currentInd<5 && ( <View style={[styles.containerBox,{left:40,zIndex:1,top:20}]}>
           {caps.map((a, ind) => (    
             <View key={ind}>
               <Pressable style={styles.press} onPress={()=>handleCap(a)}>
-               <Text style={{color:getColor(),fontSize:75,fontWeight:'bold',marginHorizontal:20}}>{a}</Text>
+               <Text style={{color:getColor(),fontSize:65,marginHorizontal:15, fontWeight:'900' }}>{a}</Text>
               </Pressable>
             </View>
                 
           ))}
-        </View>
-        <View style={[styles.containerBox,{bottom:40,right:30}]} >
-          
+        </View>)}
+        {currentInd===5 && (
+          <View style={[styles.containerBox,{left:20,zIndex:1,top:50,marginBottom:60}]}>
+                    <Pressable
+                      onPress={()=>reset()}
+                    >
+                      <Image 
+                        style={{width:80,height:80}}
+                        source={require('../../assets/img/reset-1.png')}
+                      />
+                    </Pressable>
+          </View>
+        )}
+        <View style={[styles.containerBox,{bottom:30,right:30}]} >
           <Image
             source={Caterpillar.head.img}
-            style={{height:210,width:200,left:22,bottom:15 }}
+            style={{height:190,width:200,left:22,bottom:15 }}
           />
-         
-         
           {containers.map((a, index) => (
             <View key={index} 
               style={{
-                left:index===1 ? 4 : index===2 ? -3 : index===3 ? -3 :10,
+                left:index===1 ? 4 : index===2 ? -3 : index===3 ? -3 :10,justifyContent:'space-between'
                 
               }}
               >
@@ -172,21 +191,20 @@ const MatchLetters = ({pairs}) => {
                     {a.small && (
                       <Text style={styles.letter}>{a.small}</Text>
                     )}
-                  </View>
-                
+                  </View> 
               </ImageBackground>
             </View>
           ))}
         </View>
-        <View style={[styles.containerBox,{bottom:70}]} >
+        {currentInd<5 &&(<View style={[styles.containerBox,{bottom:40}]} >
           {small.map((a,ind)=>(
             <View key={ind}>
               <Pressable onPress={()=>handleSmall(a)}>
-               <Text style={{color:getColor(),fontSize:65,fontWeight:'bold',marginHorizontal:20}}>{a}</Text>
+               <Text style={{color:getColor(),fontSize:55,fontWeight:'900',marginHorizontal:20}}>{a}</Text>
               </Pressable>
             </View>
           ))}
-        </View>
+        </View>)}
        
       </View>
     );
@@ -214,9 +232,10 @@ const styles = StyleSheet.create({
         border:'1px solid black',  
     },
     caterpillarImage: {
-      width: 140, 
-      height: 250, 
+      width: 120, 
+      height: 220, 
       overflow:'visible',
+      flex:1
      
     },
     capitalContainer: {
@@ -255,18 +274,23 @@ const styles = StyleSheet.create({
       display:'flex',
       flexDirection:'row',
       justifyContent:'center',
-      border:1
+      alignItems:'center',
+      border:1,
+      //backgroundColor:'green'
     },
     letter:{
-     fontSize:50,
-      top:100,
+      fontSize:45,
+      top:90,
       fontWeight:'500',
-      textAlign:'justify'
+      textAlign:'justify',
+      bottom:20,
+      //color:'white'
     },
     alphabet:{
       fontSize:48,
       marginHorizontal:20,
       fontStyle:'bold',
+     
     },
     press:{
       

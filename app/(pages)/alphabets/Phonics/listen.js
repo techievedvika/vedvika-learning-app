@@ -17,6 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import { PhonicImage } from "../../../../constants/data";
 import { Audio } from "expo-av";
 import { useRouter } from "expo-router";
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 const listen = () => {
   const router = useRouter();
@@ -54,7 +55,13 @@ const listen = () => {
     console.log("Playing Sound");
     await sound.playAsync();
   }
-
+  React.useEffect(() => {
+    async function lockScreenOrientation() {
+      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+    }
+    lockScreenOrientation();
+    
+  }, []);
   return (
     <>
       <StatusBar hidden={true} />

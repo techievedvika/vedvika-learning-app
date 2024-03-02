@@ -1,7 +1,8 @@
 
 import { Link, useRouter } from "expo-router";
 import * as React from "react";
-import { Image, Pressable, StatusBar, Text, View } from "react-native";
+import { Image, Pressable, StatusBar, Text, View,StyleSheet } from "react-native";
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 const index = () => {
   const router = useRouter();
@@ -11,7 +12,13 @@ const index = () => {
   const [voiceRecording, setVoiceRecording] = React.useState(false);
 
   
-
+  React.useEffect(() => {
+    async function lockScreenOrientation() {
+      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+    }
+    lockScreenOrientation();
+    
+  }, []);
   return (
     <>
       <StatusBar hidden={true} />
@@ -76,3 +83,7 @@ const index = () => {
 };
 
 export default index;
+
+const styles = StyleSheet.create({
+
+})

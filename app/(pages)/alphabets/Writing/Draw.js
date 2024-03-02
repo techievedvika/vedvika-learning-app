@@ -29,6 +29,7 @@ const Draw = () => {
     const router = useRouter();
     const{letter,image}=params;
     console.log(letter,image);
+    let img = `https://new.advanceexcel.in/vedvika/Vedvika%20Technology/${image}_(A-Z)/${letter}-01(1).png`;
     const [visible, setVisible] = useState(false);
     const ref = useRef();
    
@@ -38,12 +39,12 @@ const Draw = () => {
     const [signature, setSign] = useState();
   
     const handleOK = async (signature) => {
-      console.log(signature);
+      //console.log(signature);
       setSign(signature);
      
     };
     
-  
+    
     // Called after end of stroke
     const handleEnd = () => {
       ref.current.readSignature();
@@ -75,13 +76,17 @@ const Draw = () => {
       
       const handleResult = async()=>{
         console.log(typeof(signature));
-        try{
-          let response = await axios.post('http://192.168.1.5:5000/image',{signature,letter});
-          console.log(response.data);
-        }catch(err){
+        try {
+          let response = await axios.post('http://192.168.1.5:5000/api/image', { signature, img });
+          //console.log(response);
+        } catch (err) {
           console.log(err);
-          console.log(err.response.data);
-        }
+          if (err.response) {
+              console.log('Error response from server:', err.response.status, err.response.data);
+          } else {
+              console.log('Error without response from server:', err.message);
+          }
+      }
       }
       
     const okHandle = () => {
@@ -161,8 +166,7 @@ const Draw = () => {
               type="primary"
               activityColor="green"
               backgroundShadow="red"
-              onPress={()=>handleResult()
-              }
+              onPress={handleResult}
               className="h-16 w-auto "
             >
               <Image

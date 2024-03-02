@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { View, StyleSheet, Button, Text, Pressable, Image } from "react-native";
 import { Audio } from "expo-av";
 import RecordingLevelLayout from "./speak";
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 export default function AudioRecoder({ img, imgName }) {
   // navigation route
@@ -24,6 +25,11 @@ export default function AudioRecoder({ img, imgName }) {
 
   // Initial Load to get the audio permission
   useEffect(() => {
+    async function lockScreenOrientation() {
+      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+    }
+    lockScreenOrientation();
+    
     GetPermission();
   }, []);
 
@@ -128,7 +134,7 @@ export default function AudioRecoder({ img, imgName }) {
   };
 
   return (
-    <View className="">
+    <View className='flex-1'>
       {recordingImages ? (
         <RecordingLevelLayout />
       ) : (

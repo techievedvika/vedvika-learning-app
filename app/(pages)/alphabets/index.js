@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
-import { Text, View,ImageBackground } from 'react-native'
+import { Text, View,ImageBackground, StatusBar,Pressable,Image } from 'react-native'
 import AlphaCategories from '../../../components/alphabets/AlphaCategories';
 import Bg from '../../../assets/img/purple_bg.png';
 import { useRouter } from 'expo-router';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import backbt from '../../../assets/backward-01.png';
 
 const data = [
     {
@@ -29,16 +30,29 @@ const data = [
   ];
 const index = () => {
   const router = useRouter();
+
   useEffect(() => {
-    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-    return () => {
-      ScreenOrientation.unlockAsync();
-    };
+    async function lockScreenOrientation() {
+      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+    }
+    lockScreenOrientation();
+   
   }, []);
   return (
-    <ImageBackground source={Bg} className='flex-1 w-full items-center justify-center'>
-      <AlphaCategories data={data} autoPlay={false} pagination={true} />
-    </ImageBackground>
+    <>
+      <StatusBar hidden={true}/>
+      <ImageBackground className='flex-1 justify-center   ' source={Bg} >
+
+          <View className="flex-row mb-8 justify-start ps-16 items-start">     
+                  <Pressable
+                  onPress={()=>router.back()}
+                  >
+                    <Image source={backbt} alt="back" style={{ height:60,width:60,marginStart:60,top:40}}  className="" />
+                  </Pressable>
+          </View>
+          <AlphaCategories data={data} autoPlay={false} pagination={true} />
+      </ImageBackground>
+    </>
   )
 }
 

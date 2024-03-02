@@ -59,17 +59,9 @@ import { Link, useRouter } from "expo-router";
     }, [SIZE, SPACER, isAutoPlay, data.length, offSet.value, scrollViewRef]);
   
     return (
-      <>
-        <StatusBar hidden={true} />
-        <View className='flex-1 justify-center items-center' >
-            <View className="flex-row justify-start ps-16 items-start">     
-                <Pressable
-                onPress={()=>router.back()}
-                >
-                  <Image source={backbt} alt="back" style={{ height:60,width:60,marginStart:60,top:40}}  className="" />
-                </Pressable>
-            </View>
-            <View className="flex-1">
+      
+            
+            <View className="flex-1 ">
               <Animated.ScrollView
                 ref={scrollViewRef}
                 onScroll={onScroll}
@@ -141,9 +133,7 @@ import { Link, useRouter } from "expo-router";
   
               {pagination && <Pagination data={data} x={x} size={SIZE} />}
             </View>
-        </View>
-        
-      </>
+       
     );
   };
   

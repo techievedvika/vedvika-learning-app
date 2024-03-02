@@ -50,7 +50,6 @@ import {
       <>
         <StatusBar hidden={true}/>
         <View className="bg-white" style={{ width: width, height: height }}>
-          <StatusBar hidden={true} />
           <View className="flex-row my-3 ">
             <View className="flex-1 justify-start">
               <TouchableOpacity
@@ -116,7 +115,7 @@ import {
                             }),
                           }}
                         />
-                        <Image
+                        {/* <Image
                             source={require('../../../../assets/violet-arrow.png')}
                             className="overflow-hidden"
                           style={{
@@ -131,7 +130,7 @@ import {
                               },
                             }),
                           }}
-                        />
+                        /> */}
                       </View>
                       <View className="flex-row justify-center items-center">
                         {item.images[imgCount]?.map((itm, i) => (

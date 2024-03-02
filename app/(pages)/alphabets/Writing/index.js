@@ -13,12 +13,12 @@ import {
 import React from "react";
 import Bg from '../../../../assets/img/purple_bg.png';
 import backbt from "../../../../assets/backward-01.png";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 
 
 const index =()=> {
   // const navigation = useNavigation();
-
+  const router = useRouter();
   const data = [
     {
       image: require("../../../../assets/alphabets/A-01.jpg"),
@@ -158,19 +158,21 @@ const index =()=> {
     <>
       <StatusBar hidden={true} />
       <ImageBackground source={Bg} style={{ flex: 1, width: "100%", alignItems: 'center', justifyContent: 'center' }}>
-        <View style={{ marginTop: 5, marginLeft: 10 }}>
-          <Pressable>
-            <Image source={backbt} alt="back button" style={{ height: 30, width: 30 }} />
+        <View style={{ marginTop: 5,display:'flex',justifyContent:'flex-start' }} className='w-full p-4'>
+          <Pressable
+            onPress={()=>router.back()}
+          >
+            <Image source={backbt} alt="back button" style={{ height: 40, width: 50 }} />
           </Pressable>
         </View>
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1,bottom:20,paddingHorizontal:10 }}>
           <ScrollView
             horizontal
              bounces={false}
              showsHorizontalScrollIndicator={false}
           >
             {data?.map((item, index) => (
-              <View style={{ justifyContent: "center", alignItems: "center", marginHorizontal: 2 }} key={index}>
+              <View style={{ justifyContent: "center", alignItems: "center", marginHorizontal: 6 }} key={index}>
                 <Link
                    asChild
                   //  href='/alphabets/Writing/DrawLines'

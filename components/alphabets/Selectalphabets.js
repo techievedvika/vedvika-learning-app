@@ -1,7 +1,7 @@
 import { View,StyleSheet, Text, Image, ScrollView, Pressable } from "react-native";
 import React from "react";
 import { AlphaImages } from "../../constants/data";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 
 const Selectalphabets = () => {
   // navigation route
@@ -14,7 +14,9 @@ const Selectalphabets = () => {
         <View style={styles.container} >
           {AlphaImages.data.map((item, index) => {
             return (
-              <View style={styles.imgContainer} key={index} className="border-2 p-4 rounded-full">
+              <View 
+                style={styles.imgContainer} key={index} 
+                className=" rounded-full">
                 <Link 
                 asChild
                 href={{
@@ -24,7 +26,9 @@ const Selectalphabets = () => {
                   }
                 }}
                 >
-                  <Pressable      
+                  <Pressable 
+                  // className='ms-4' 
+                  
                   >
                     <Image style={styles.img} source={item.letter} className="w-16 h-16" />
                   </Pressable>
@@ -43,7 +47,8 @@ const styles = StyleSheet.create({
   main:{
     flex:1,
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    marginTop:10
   },
   container:{
     display:'flex',
@@ -56,13 +61,15 @@ const styles = StyleSheet.create({
   img:{
     height:60,
     width:60,
+    margin:20
     
   },
   imgContainer:{
     borderWidth: 2,
     borderColor: 'black',
-    borderRadius: 50,
-    padding: 20,
-    margin:4
+    borderRadius: 100,
+    margin:4,
+    display:'flex',
+    marginLeft:10
   },
 })
