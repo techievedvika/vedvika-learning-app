@@ -1,5 +1,5 @@
-import Logo from '../../assets/img/vedvika_logo.png';
-import { Image, ImageBackground, Pressable, StatusBar, View } from 'react-native';
+
+import {  ImageBackground, Pressable, StatusBar, View } from 'react-native';
 import Categories from '../../components/Categories';
 import Bg from '../../assets/img/purple_bg.png';
 import * as ScreenOrientation from 'expo-screen-orientation';

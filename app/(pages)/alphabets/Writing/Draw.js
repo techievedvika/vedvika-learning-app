@@ -12,7 +12,6 @@ import {
     View,
   } from "react-native";
   import React, { useRef, useState } from "react";
-  import { Dimensions } from "react-native";
   import SignatureScreen from "react-native-signature-canvas";
   import backbt from "../../../../assets/arrow-left.png";
   import forword from "../../../../assets/forward-01.png";
@@ -23,13 +22,14 @@ import {
   } from "react-native-really-awesome-button";
   
   import axios from 'axios';
+  import Svg, { Path } from 'react-native-svg';
 
 const Draw = () => {
     const params = useLocalSearchParams();
     const router = useRouter();
     const{letter,image}=params;
     console.log(letter,image);
-    let img = `https://new.advanceexcel.in/vedvika/Vedvika%20Technology/${image}_(A-Z)/${letter}-01(1).png`;
+    let img = `https://new.advanceexcel.in/vedvika/Vedvika%20Technology/Alphabet(png)/${letter}(1).png`;
     const [visible, setVisible] = useState(false);
     const ref = useRef();
    
@@ -37,7 +37,28 @@ const Draw = () => {
     const [colorText, setPenColor] = useState("");
   
     const [signature, setSign] = useState();
-  
+
+    const guide =[]
+    
+    const pointInPolygon =(point, vs)=> {
+      
+      let x = point[0], y = point[1];
+      
+      var inside = false;
+      for (let i = 0, j = vs.length - 1; i < vs.length; j = i++) {
+          let xi = vs[i][0], yi = vs[i][1];
+          let xj = vs[j][0], yj = vs[j][1];
+          
+          let intersect = ((yi > y) != (yj > y))
+              && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+          if (intersect) inside = !inside;
+      }
+      
+      return inside;
+  };
+
+
+
     const handleOK = async (signature) => {
       //console.log(signature);
       setSign(signature);
@@ -73,12 +94,14 @@ const Draw = () => {
   
     `;
    
-      
+  
+    const BASE_URL = 'http://192.168.1.6:5000/api';
+
       const handleResult = async()=>{
         console.log(typeof(signature));
         try {
-          let response = await axios.post('http://192.168.1.5:5000/api/image', { signature, img });
-          //console.log(response);
+          let response = await axios.post(`${BASE_URL}/compare-image`, { signature, img });
+          console.log(response.data);
         } catch (err) {
           console.log(err);
           if (err.response) {
@@ -92,9 +115,11 @@ const Draw = () => {
     const okHandle = () => {
         setVisible(false);
       };
+     
   return (
     <>
     <StatusBar hidden={true}/>
+
     <Dialog.Container visible={visible} supportedOrientations={["landscape"]}>
       <Dialog.Title>Result</Dialog.Title>
       <Dialog.Description>
@@ -128,27 +153,51 @@ const Draw = () => {
           </TouchableOpacity>
         </View>
       </View>
+      <View>
 
-      <View style={{ width: imgWidth, height: imgHeight }}>
-        <SignatureScreen
-          ref={ref}
-          onEnd={handleEnd}
-          onOK={handleOK}
-          penColor={colorText}
-          webStyle={style}
-          minWidth={5}
-          overlaySrc={
-            image
-              ? `https://new.advanceexcel.in/vedvika/Vedvika%20Technology/${image}_(A-Z)/${letter}-01(1).png`
-              : ""
-          }
-          backgroundColor="white"
-          overlayWidth={"100%"}
-          overlayHeight={"100%"}
-         
-        />
+        <View  style={{ 
+          width: 800,
+          display:'flex',
+          height:1000,
+          backgroundColor:'gray',
+          flexDirection:'row',
+          position:'relative'
+           }}>
+          <SignatureScreen
+            ref={ref}
+            onEnd={handleEnd}
+            onOK={handleOK}
+            penColor='gray'
+            webStyle={style}
+            minWidth={5}
+            overlaySrc={
+              image
+                ? `https://new.advanceexcel.in/vedvika/Vedvika%20Technology/${image}_(A-Z)/${letter}-01(1).png`
+                : ""
+            }
+            backgroundColor="skyblue"
+            overlayWidth={"100%"}
+            overlayHeight={"100%"}
+          
+          />
+            {/* <Svg
+            className='absolute'
+          width={300}
+          height={300}
+          viewBox="0 0 300 300"
+          fill="none"
+        
+        >
+          <Path
+            d="M100,250 L200,50 L300,250 L275,250 L225,150 L175,150 L125,250 Z"
+            stroke="black"
+            strokeWidth="3"
+            fill="transparent"
+          />
+          
+        </Svg> */}
+        </View>
       </View>
-
       <View className="flex-1 justify-start">
         <View className="flex-1 items-center">
           <TouchableOpacity onPress={handleRedo}>
@@ -160,31 +209,30 @@ const Draw = () => {
             onPress={getResult}
           > */}
           {signature ? (
-            <AwesomeButton
-              progress
-              name="rick"
-              type="primary"
-              activityColor="green"
-              backgroundShadow="red"
-              onPress={handleResult}
-              className="h-16 w-auto "
-            >
-              <Image
-                source={require("../../../../assets/ok.png")}
-                alt="back button"
-                className="h-14 w-20 "
-              />
-            </AwesomeButton>
+            <>
+
+              <AwesomeButton
+                progress
+                name="rick"
+                type="primary"
+                activityColor="green"
+                backgroundShadow="red"
+                onPress={handleResult}
+                className="h-16 w-auto "
+              >
+                <Image
+                  source={require("../../../../assets/ok.png")}
+                  alt="back button"
+                  className="h-14 w-20 "
+                />
+              </AwesomeButton>
+             
+            </>
           ) : (
             ""
           )}
 
-          {/* <Image
-              source={require("../../../../assets/ok.png")}
-              alt="back button"
-              // className="h-14 w-20 flex flex-col justify-center items-center text-white font-bold text-lg"
-            /> */}
-          {/* </TouchableOpacity> */}
+      
         </View>
       </View>
     </View>
@@ -197,8 +245,9 @@ export default Draw;
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
+      alignItems: 'center',
+      justifyContent: 'center',
+      position: 'relative',
     },
     row: {
       flexDirection: "row",
@@ -214,7 +263,7 @@ const styles = StyleSheet.create({
     },
     text: {
       color: "#fff",
-      fontWeight: "900",
+      fontWeight: "500",
     },
     textInput: {
       paddingVertical: 10,
@@ -232,7 +281,7 @@ const styles = StyleSheet.create({
     },
   });
 
-
+ 
   // const handleResult = async()=>{
   //   console.log(typeof(signature));
   //   try{

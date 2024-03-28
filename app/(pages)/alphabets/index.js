@@ -15,7 +15,7 @@ const data = [
     {
       image: require("../../../assets/img/alphabetabc.jpg"),
       route: "/alphabets/KnowAlphabets",
-      title: "Know your Alphabets",
+      title: "Play and Learn",
     },
     // {
     //   image: require("../../assets/img/alphabetGamesImg.jpeg"),
@@ -41,13 +41,14 @@ const index = () => {
   return (
     <>
       <StatusBar hidden={true}/>
-      <ImageBackground className='flex-1 justify-center   ' source={Bg} >
+      <ImageBackground className='flex-col justify-center   ' source={Bg} >
 
-          <View className="flex-row mb-8 justify-start ps-16 items-start">     
+          <View className=" flex-row ">     
                   <Pressable
                   onPress={()=>router.back()}
+                  className=" py-4 top-6  "
                   >
-                    <Image source={backbt} alt="back" style={{ height:60,width:60,marginStart:60,top:40}}  className="" />
+                    <Image  onPress={()=>router.back()} source={backbt} alt="back" style={{ height:60,width:60,marginStart:60}}  className="" />
                   </Pressable>
           </View>
           <AlphaCategories data={data} autoPlay={false} pagination={true} />

@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@benjeau/react-native-draw": "^0.8.3",
+    "@shopify/react-native-skia": "0.1.196",
     "axios": "^1.6.7",
+    "buffer": "^6.0.3",
     "expo": "~49.0.15",
     "expo-av": "~13.4.1",
     "expo-constants": "~14.4.2",
@@ -40,6 +42,7 @@
     "react-native-web": "~0.19.6",
     "react-redux": "^9.1.0",
     "redux": "^5.0.1",
+    "rn-perfect-sketch-canvas": "^0.3.0",
     "volkeno-react-native-drag-drop": "^1.1.2"
   },
   "devDependencies": {

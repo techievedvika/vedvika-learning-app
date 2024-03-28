@@ -18,9 +18,20 @@
           "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone."
         }
       ]
-    
     ],
     "name": "vedvikalearning",
-    "slug": "vedvikalearning"
+    "slug": "vedvikalearning",
+  
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "90f9f1bf-b4ee-48d1-8b23-2dc297a9ac72"
+      }
+    },
+    "android": {
+      "package": "com.vedvika.vedvikalearning"
+    }
   }
 }

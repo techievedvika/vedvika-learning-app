@@ -105,7 +105,7 @@ const Draggable = (props) => {
   //   }
   // };
   const isDropArea = (gesture) => {
-    console.log('X: ',gesture.moveX,'Y: ',gesture.moveY,'letter: ',letter)
+    //console.log('X: ',gesture.moveX,'Y: ',gesture.moveY,'letter: ',letter)
     let zone1 = {
       top:dropZone1.y,
       bottom:dropZone1.y + dropZone1.height,
@@ -152,10 +152,11 @@ const Draggable = (props) => {
       {showDraggable && (
         <View style={{ position: 'absolute',marginHorizontal:6, }}>
           <Animated.View
+          className='bg-emerald-950'
             {...panResponder.panHandlers}
             style={[panStyle, styles.circle, {opacity:opacity}]}
           >
-          <Text style={{fontSize:62,color:'white',fontWeight:'bold'}}>{letter}</Text>
+          <Text style={{fontSize:48,color:'white',fontWeight:'bold'}}>{letter}</Text>
           </Animated.View>
         </View>
       )}
@@ -168,14 +169,14 @@ const CIRCLE_RADIUS = 30;
 
 const styles = StyleSheet.create({
   circle: {
-    backgroundColor:'#478778',
-    width:90,
-    height:90,
+    backgroundColor:'#0c3623',
+    width:70,
+    height:70,
   borderRadius: 100,
   textAlign:'center',
   justifyContent:'center',
   alignItems:'center',
-  padding:1,
+
   marginHorizontal:6
 
 },
@@ -183,3 +184,4 @@ const styles = StyleSheet.create({
 
 export default Draggable;
 
+// #478778

@@ -1,4 +1,4 @@
-import { StatusBar,StyleSheet,Text,View,Pressable, ImageBackground,Image } from 'react-native'
+import { StatusBar,StyleSheet,View,Pressable, ImageBackground,Image } from 'react-native'
 import Logo from '../assets/img/vedvika.png';
 import {Link} from 'expo-router';
 import Bg from "../assets/img/purple_bg.png";

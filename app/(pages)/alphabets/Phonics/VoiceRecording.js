@@ -1,12 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, StyleSheet, Button, Text, Pressable, Image } from "react-native";
+import { View, StyleSheet, Button, Text, Pressable, Image, StatusBar } from "react-native";
 import { Audio } from "expo-av";
-import RecordingLevelLayout from "./speak";
+// import Speak from "./speak";
 import * as ScreenOrientation from 'expo-screen-orientation';
+import { useLocalSearchParams, useRouter } from "expo-router";
 
-export default function AudioRecoder({ img, imgName }) {
-  // navigation route
+export default function VoiceRecording() {
 
+  const params = useLocalSearchParams();
+  let {img,imgName}=params;
+  const router = useRouter();
   // Refs for the audio
   const AudioRecorder = useRef(new Audio.Recording());
   const AudioPlayer = useRef(new Audio.Sound());
@@ -16,12 +19,10 @@ export default function AudioRecoder({ img, imgName }) {
   const [AudioPermission, SetAudioPermission] = useState(false);
   const [IsRecording, SetIsRecording] = useState(false);
   const [IsPLaying, SetIsPLaying] = useState(false);
-  const [recordingImages, setRecordingImages] = useState(false);
+  
 
   // voiceRecord screen open toggle
-  const voiceRecordingToggleSwitch = () => {
-    setRecordingImages((previousState) => !previousState);
-  };
+
 
   // Initial Load to get the audio permission
   useEffect(() => {
@@ -134,125 +135,126 @@ export default function AudioRecoder({ img, imgName }) {
   };
 
   return (
-    <View className='flex-1'>
-      {recordingImages ? (
-        <RecordingLevelLayout />
-      ) : (
-        <View className="flex-1 w-full h-full">
-          <View className="my-5 ml-10 flex-row z-10">
-            <Pressable
-              onPress={voiceRecordingToggleSwitch}
-              className="flex-row justify-start items-start z-20"
-            >
-              <Image
-                source={require("../../../../assets/bg1.png")}
-                alt="back button"
-                className="h-12 w-12"
-              />
-            </Pressable>
-            <View className="flex-row justify-center items-center w-full absolute">
-              <View className="flex-row justify-center items-center w-full mx-auto gap-x-6">
-                <View>
-                  <Text className="text-5xl text-black font-extrabold">
-                    Voice Record
-                  </Text>
+    <>
+      <StatusBar hidden={true}/>
+      <View className='flex-1'>
+        
+          <View className="flex-1 w-full h-full">
+            <View className="my-5 ml-10 flex-row z-10">
+              <Pressable
+                onPress={()=>router.back()}
+                className="flex-row justify-start items-start z-20"
+              >
+                <Image
+                  source={require("../../../../assets/bg1.png")}
+                  alt="back button"
+                  className="h-12 w-12"
+                />
+              </Pressable>
+              <View className="flex-row justify-center items-center w-full absolute">
+                <View className="flex-row justify-center items-center w-full mx-auto gap-x-6">
+                  <View>
+                    <Text className="text-5xl text-black font-extrabold">
+                      Voice Record
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>
-          </View>
-          <View className="flex-row justify-between items-center w-full absolute h-full">
-            <View className="flex-1 justify-center items-center w-full">
-              <Image
-                source={img}
-                alt="back button"
-                className="h-52 w-52 lg:h-72 lg:w-72 overflow-visible"
-              />
-              <Text className="capitalize font-extrabold text-3xl">
-                {imgName}
-              </Text>
-            </View>
+            <View className="flex-row justify-between items-center w-full absolute h-full">
+              <View className="flex-1 justify-center items-center w-full">
+                <Image
+                  source={img}
+                  alt="back button"
+                  className="h-52 w-52 lg:h-72 lg:w-72 overflow-visible"
+                />
+                <Text className="capitalize font-extrabold text-3xl">
+                  {imgName}
+                </Text>
+              </View>
 
-            <View className="flex-1 justify-center items-center w-full">
-              {RecordedURI ? (
-                <View className="flex-row  w-full h-full justify-end gap-14 mr-5 z-10">
-                  <Pressable
-                    onPress={() => SetRecordedURI("")}
-                    className="z-20"
-                  >
-                    <Image
-                      source={require("../../../../assets/RefreshButton-01.png")}
-                      alt="back button"
-                      className="h-10 w-10"
-                    />
-                  </Pressable>
-                </View>
-              ) : (
-                ""
-              )}
+              <View className="flex-1 justify-center items-center w-full">
+                {RecordedURI ? (
+                  <View className="flex-row  w-full h-full justify-end gap-14 mr-5 z-10">
+                    <Pressable
+                      onPress={() => SetRecordedURI("")}
+                      className="z-20"
+                    >
+                      <Image
+                        source={require("../../../../assets/RefreshButton-01.png")}
+                        alt="back button"
+                        className="h-10 w-10"
+                      />
+                    </Pressable>
+                  </View>
+                ) : (
+                  ""
+                )}
 
-              {RecordedURI ? (
-                <View className="flex-1 justify-center w-full items-center absolute">
-                  {/* Play section */}
-                  {RecordedURI ? (
+                {RecordedURI ? (
+                  <View className="flex-1 justify-center w-full items-center absolute">
+                    {/* Play section */}
+                    {RecordedURI ? (
+                      <View className="z-10">
+                        {IsPLaying ? (
+                          <Image
+                            source={require("../../../../assets/GifAnimation/audio-wave_2.gif")}
+                            alt="back button"
+                            className="h-24 w-24"
+                          />
+                        ) : (
+                          <Image
+                            source={require("../../../../assets/GifAnimation/music.gif")}
+                            alt="back button"
+                            className="h-24 w-24"
+                          />
+                        )}
+
+                        <Button
+                          title={IsPLaying ? "Stop Sound" : "Play Sound"}
+                          color={IsPLaying ? "red" : "orange"}
+                          onPress={IsPLaying ? StopPlaying : PlayRecordedAudio}
+                          className="z-20"
+                        />
+                      </View>
+                    ) : (
+                      ""
+                    )}
+                  </View>
+                ) : (
+                  <View className="flex-1 justify-center w-full items-center absolute">
+                    {/* recording section */}
                     <View className="z-10">
-                      {IsPLaying ? (
+                      {IsRecording ? (
                         <Image
-                          source={require("../../../../assets/GifAnimation/audio-wave_2.gif")}
+                          source={require("../../../../assets/GifAnimation/audio-wave.gif")}
                           alt="back button"
-                          className="h-24 w-24"
+                          className="h-24 w-24 rounded"
                         />
                       ) : (
                         <Image
-                          source={require("../../../../assets/GifAnimation/music.gif")}
+                          source={require("../../../../assets/GifAnimation/singerMic.gif")}
                           alt="back button"
-                          className="h-24 w-24"
+                          className="h-40 w-40 rounded-xl"
                         />
                       )}
 
                       <Button
-                        title={IsPLaying ? "Stop Sound" : "Play Sound"}
-                        color={IsPLaying ? "red" : "orange"}
-                        onPress={IsPLaying ? StopPlaying : PlayRecordedAudio}
+                        title={IsRecording ? "Stop sound" : "Make a sound"}
+                        color={IsRecording ? "red" : "green"}
+                        onPress={IsRecording ? StopRecording : StartRecording}
                         className="z-20"
                       />
                     </View>
-                  ) : (
-                    ""
-                  )}
-                </View>
-              ) : (
-                <View className="flex-1 justify-center w-full items-center absolute">
-                  {/* recording section */}
-                  <View className="z-10">
-                    {IsRecording ? (
-                      <Image
-                        source={require("../../../../assets/GifAnimation/audio-wave.gif")}
-                        alt="back button"
-                        className="h-24 w-24 rounded"
-                      />
-                    ) : (
-                      <Image
-                        source={require("../../../../assets/GifAnimation/singerMic.gif")}
-                        alt="back button"
-                        className="h-40 w-40 rounded-xl"
-                      />
-                    )}
-
-                    <Button
-                      title={IsRecording ? "Stop sound" : "Make a sound"}
-                      color={IsRecording ? "red" : "green"}
-                      onPress={IsRecording ? StopRecording : StartRecording}
-                      className="z-20"
-                    />
                   </View>
-                </View>
-              )}
+                )}
 
-              <Text>{RecordedURI}</Text>
+                {/* <Text>{RecordedURI}</Text> */}
+              </View>
             </View>
           </View>
-        </View>
-      )}
-    </View>
+        
+      </View>
+    </>
   );
 }

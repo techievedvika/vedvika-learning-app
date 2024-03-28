@@ -10,24 +10,16 @@ import {
 } from "react-native";
 import React, { useEffect } from "react";
 import { PhonicImage } from "../../../../constants/data"
-// import LayoutPhonicsRecord from "./LayoutPhonicsRecord";
-import AudioRecoder from "./VoiceRecording";
+import { Link } from "expo-router";
 import { useRouter } from "expo-router";
 import * as ScreenOrientation from 'expo-screen-orientation';
 
-const RecordingLevelLayout = () => {
-  
-  const [voiceRecording, setVoiceRecording] = React.useState(false);
-  const [imgSend, setImgSend] = React.useState(false);
-  const [imgName, setImgName] = React.useState(false);
+const Speak = () => {
+
   
   const router = useRouter();
   // voiceRecord screen open toggle
-  const voiceRecordingToggleSwitch = (img, name) => {
-    setImgSend(img);
-    setImgName(name);
-    setVoiceRecording((previousState) => !previousState);
-  };
+ 
   useEffect(() => {
     async function lockScreenOrientation() {
       await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
@@ -39,13 +31,7 @@ const RecordingLevelLayout = () => {
   return (
     <>
       <StatusBar hidden={true}/>
-      {voiceRecording ? (
-        <AudioRecoder
-          img={imgSend}
-          imgName={imgName}
-          className="w-full h-full"
-        />
-      ) : (
+       
         <View className="w-full h-full">
           <View className="mt-5 ml-10 relative flex-row z-10 drop-shadow-2xl items-center">
             <Pressable
@@ -76,9 +62,7 @@ const RecordingLevelLayout = () => {
                   key={index}
                   className="flex-1 justify-center items-center w-full"
                 >
-                  <Text className="text-3xl lg:text-7xl font-extrabold mt-3">
-                    Letter {items.title}
-                  </Text>
+                  <Text className="text-3xl lg:text-7xl font-extrabold mt-3">Letter {items.title}</Text>
                   <View className="flex-row">
                     {items.images.map((itm, i) => {
                       return (
@@ -87,19 +71,28 @@ const RecordingLevelLayout = () => {
                           className="flex-1 justify-center items-center w-full"
                         >
                           <View className="flex-row my-4">
-                            <Pressable
-                              onPress={() =>
-                                voiceRecordingToggleSwitch(itm?.img, itm?.name)
-                              }
-                              className="items-center"
+                            <Link
+                              asChild
+                              href={{
+                                pathname:'/alphabets/Phonics/VoiceRecording',
+                                params:{
+                                  img:itm?.img ,
+                                  imgName:itm?.name
+                                }
+                              }}
+                            
                             >
-                              <Image
-                                source={itm?.img}
-                                alt="back button"
-                                className="h-[117px] w-28 lg:h-48 lg:w-44 overflow-visible"
-                              />
-                              <Text className="text-3xl">{itm.name}</Text>
-                            </Pressable>
+                              <Pressable
+                                className="items-center"
+                              >
+                                <Image
+                                  source={itm?.img}
+                                  alt="back button"
+                                  className="h-[117px] w-28 lg:h-48 lg:w-44 overflow-visible"
+                                />
+                                <Text className="text-3xl">{itm.name}</Text>
+                              </Pressable>
+                            </Link>
                           </View>
                         </View>
                       );
@@ -110,9 +103,9 @@ const RecordingLevelLayout = () => {
             })}
           </ScrollView>
         </View>
-      )}
+      
     </>
   );
 };
 
-export default RecordingLevelLayout;
+export default Speak;

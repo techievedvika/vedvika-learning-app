@@ -72,9 +72,9 @@ const listen = () => {
         className="overflow-visible flex-1 justify-center bg-cyan-100"
       >
         {modalVisible ? (
-          <View className="z-20 absolute flex-1 justify-center items-center w-full">
-            <View style={styles.modalView} className="w-2/3">
-              <View className="w-full items-end">
+          <View className="z-20 absolute  flex-1 justify-center items-center w-full">
+            <View style={styles.modalView} className=" w-2/3 ">
+              <View className="w-full px-2 items-end top-6">
                 <Pressable onPress={() => setModalVisible(false)}>
                   <Image
                     source={require("../../../../assets/close-btn.png")}
@@ -83,12 +83,12 @@ const listen = () => {
                 </Pressable>
               </View>
               <View className="flex-1 justify-center w-full">
-                <View className="flex-row justify-between my-2 w-full">
+                <View className="flex-row justify-between w-full">
                   <View className="flex-1 justify-center items-center">
                     <Pressable
                       // onPress={() => Speech.speak(imgUrl[0].title)}
                       onPress={() => playSound(imgUrl[0].title)}
-                      className="mb-2 flex-1 justify-center items-center"
+                      className=" flex-1 justify-center items-center"
                     >
                       <Image
                         source={imgUrl[0]?.img}

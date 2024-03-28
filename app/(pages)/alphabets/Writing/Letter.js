@@ -76,7 +76,7 @@ const Letter = () => {
                 <Link 
                     asChild
                     href={{
-                        pathname:'/alphabets/Writing/Draw',
+                        pathname:'/alphabets/Writing/DrawLetter',
                         params:{
                             letter:letter,
                             image: "100",
@@ -98,7 +98,7 @@ const Letter = () => {
                 <Link
                     asChild
                         href={{
-                        pathname:'/alphabets/Writing/Draw',
+                        pathname:'/alphabets/Writing/DrawLetter',
                         params:{
                             letter:letter,
                             image: "75",
@@ -118,7 +118,7 @@ const Letter = () => {
                 <Link
                     asChild
                         href={{
-                        pathname:'/alphabets/Writing/Draw',
+                        pathname:'/alphabets/Writing/DrawLetter',
                         params:{
                             letter: letter,
                             image: "50",
@@ -139,7 +139,7 @@ const Letter = () => {
                 <Link
                     asChild
                         href={{
-                        pathname:'/alphabets/Writing/Draw',
+                        pathname:'/alphabets/Writing/DrawLetter',
                         params:{
                             letter: letter,
                             image: "25",
@@ -160,7 +160,7 @@ const Letter = () => {
                 <Link
                 asChild
                         href={{
-                        pathname:'/alphabets/Writing/Draw',
+                        pathname:'/alphabets/Writing/DrawLetter',
                         params:{
                             letter: letter,
                             image: "",

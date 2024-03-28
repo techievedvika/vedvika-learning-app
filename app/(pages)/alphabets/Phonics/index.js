@@ -47,7 +47,7 @@ const index = () => {
         <View className="flex absolute h-full justify-center w-full">
           <View className="flex-row justify-between items-center">
             <View className="flex-1 justify-center items-center">
-                <Link href='/alphabets/Phonics/listen' asChild>
+                <Link href='/alphabets/Phonics/Letters' asChild>
                     <Pressable
                         className="items-center gap-y-3"
                     >
@@ -59,6 +59,21 @@ const index = () => {
                         <Text className="text-3xl font-semibold">Listen</Text>
                     </Pressable>
                 </Link>
+            </View>
+            <View className="flex-1 justify-center items-center">
+              <Link href='/alphabets/Phonics/LetterImages' asChild>
+                <Pressable
+                    className="items-center gap-y-3"
+                    
+                >
+                    <Image
+                    source={require("../../../../assets/speak-01.png")}
+                    alt="back button"
+                    className="h-36 w-36"
+                    />
+                    <Text className="text-3xl font-semibold">A-Z</Text>
+                </Pressable>
+              </Link>
             </View>
             <View className="flex-1 justify-center items-center">
               <Link href='/alphabets/Phonics/speak' asChild>

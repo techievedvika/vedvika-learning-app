@@ -133,9 +133,10 @@ export default Categories;
 
 const styles = StyleSheet.create({
     imageContainer: {
-      borderRadius: 18,
+      borderRadius: 20,
       overflow: "hidden",
       backgroundColor: "pink",
+      elevation:30
     },
     image: {
       width: "100%",

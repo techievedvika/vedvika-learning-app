@@ -97,15 +97,16 @@ import { Link, useRouter } from "expo-router";
                     <View
                       style={{
                         width: SIZE,
-                        // height: height,
+                         height: height,
                         justifyContent: "center",
                         flex: 1,
+                        bottom:30
                       }}
                       key={index}
                     >
                       <Animated.View
                         style={[styles.imageContainer, style]}
-                        className="relative flex-row  justify-center items-end overflow-visible"
+                       
                       >
                         <Link asChild href={item?.route}>
                             <TouchableOpacity
@@ -116,12 +117,12 @@ import { Link, useRouter } from "expo-router";
                                 source={item.image}
                                 style={styles.image}
                                 resizeMode="stretch"
-                                // className="object-cover h-52 w-96 overflow-visible"
+                                 className=" object-contain h-52 w-96 overflow-visible"
                             />
                             </TouchableOpacity>
                         </Link>
-                        <View className=" absolute bg-purple-400 rounded-xl">
-                          <Text className="text-2xl  p-1 text-white">
+                        <View style={styles.textContainer} className=" absolute bg-purple-400 rounded-xl bottom-10">
+                          <Text style={styles.text}  className="text-2xl  p-1 text-white">
                             {item.title}
                           </Text>
                         </View>
@@ -141,20 +142,41 @@ import { Link, useRouter } from "expo-router";
   
   const styles = StyleSheet.create({
     imageContainer: {
-      borderRadius: 18,
+      borderRadius: 25,
       overflow: "hidden",
-      // backgroundColor: "pink",
+      //backgroundColor: "pink",
+      elevation:30,
+      //maxHeight:2/3
+      height:'65%'
     },
     image: {
       width: "100%",
       height: undefined,
       aspectRatio: 16 / 9,
-      overflow: "visible",
+      //overflow: "visible",
     },
     button:{
         height:'28px',
         width:'40px',
         
+    },
+    textContainer:{
+      posotion:'absolute',
+      //backgroundColor: 'purple',
+      bottom:40,
+      display:'flex',
+      //width:300,
+      borderRadius:50,
+      textAlign:'center',
+      paddingVertical:6
+    },
+    text:{
+      backgroundColor:'#a492d8',
+      fontSize:20,
+      textAlign:'center',
+      color:'white',
+      fontWeight:'bold',
+      padding:4
     }
   });
   
